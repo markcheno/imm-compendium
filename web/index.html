@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Imm Deep Sky Compendium</title>
+  <meta name="description" content="Gary Imm's Deep Sky Compendium as a web app: over 3,100 deep sky objects with live altitude, transit and moon data for your location.">
+  <meta name="author" content="Gary Imm (Compendium data and images)">
+  <meta property="og:title" content="Imm Deep Sky Compendium">
+  <meta property="og:description" content="Gary Imm's guide to over 3,100 deep sky objects for astrophotographers, with live sky data for your location.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23111a2e'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4' transform='rotate(-30 16 16)' fill='none' stroke='%23a9c4ff' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ffe9a8'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Imm Deep Sky Compendium</h1>
+      <p class="byline">By <a href="https://www.astrobin.com/users/GaryI/" target="_blank" rel="noopener">Gary Imm</a> · <span data-edition>2026 · 6th Edition</span> · <a href="#about" data-goto="about">unofficial web version</a></p>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" data-tab="catalog" aria-selected="true">Catalog</button>
+      <button role="tab" data-tab="about" aria-selected="false">About</button>
+      <button role="tab" data-tab="guide" aria-selected="false">User Guide</button>
+      <button role="tab" data-tab="classes" aria-selected="false">Types &amp; Classes</button>
+      <button role="tab" data-tab="definitions" aria-selected="false">Definitions</button>
+      <button role="tab" data-tab="references" aria-selected="false">References</button>
+    </nav>
+    <label class="theme-pick">
+      <span class="sr-only">Theme</span>
+      <select id="theme" title="Theme">
+        <option value="auto">Auto theme</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="night">Night (red)</option>
+      </select>
+    </label>
+  </header>
+
+  <main>
+    <section id="tab-catalog" class="tab-panel" role="tabpanel">
+      <div class="panels">
+        <details class="panel" id="panel-time" open>
+          <summary><span class="step">1</span> Time &amp; location <span class="summary-inline" id="time-inline"></span></summary>
+          <div class="panel-body">
+            <div class="field-row">
+              <label class="field grow">
+                <span>Date / time <small id="tz-label"></small></span>
+                <input type="datetime-local" id="dt" step="60">
+              </label>
+              <div class="btn-group" aria-label="Set time">
+                <button id="btn-now" class="btn" title="Set to the current time">Now</button>
+                <button id="btn-sunset" class="btn" title="Set to sunset today">Sunset</button>
+                <label class="toggle" title="Keep following the current time"><input type="checkbox" id="live"> Live</label>
+              </div>
+            </div>
+            <div class="steppers" aria-label="Step time">
+              <button class="btn small" data-step="-1M">−1 mo</button>
+              <button class="btn small" data-step="-1d">−1 d</button>
+              <button class="btn small" data-step="-1h">−1 h</button>
+              <button class="btn small" data-step="-10m">−10 m</button>
+              <button class="btn small" data-step="10m">+10 m</button>
+              <button class="btn small" data-step="1h">+1 h</button>
+              <button class="btn small" data-step="1d">+1 d</button>
+              <button class="btn small" data-step="1M">+1 mo</button>
+            </div>
+            <div class="field-row">
+              <label class="field">
+                <span>Latitude <small>N +</small></span>
+                <input type="text" id="lat" inputmode="decimal" autocomplete="off" placeholder="31.784 or 31 47 03">
+              </label>
+              <label class="field">
+                <span>Longitude <small>E +</small></span>
+                <input type="text" id="lon" inputmode="decimal" autocomplete="off" placeholder="-95.093">
+              </label>
+              <label class="field">
+                <span>Time zone</span>
+                <select id="tz"></select>
+              </label>
+              <button id="btn-geo" class="btn" title="Use this device's location">Use my location</button>
+            </div>
+            <p class="hint" id="loc-msg" role="status"></p>
+          </div>
+        </details>
+
+        <details class="panel" id="panel-sky" open>
+          <summary><span class="step">2</span> Sun &amp; Moon <span class="summary-inline" id="sky-inline"></span></summary>
+          <div class="panel-body sky">
+            <div class="sky-col">
+              <h3>Sun</h3>
+              <dl>
+                <dt>Sunset</dt><dd id="s-sunset">–</dd>
+                <dt>Naut. dusk</dt><dd id="s-dusk">–</dd>
+                <dt>Naut. dawn</dt><dd id="s-dawn">–</dd>
+                <dt>Sunrise</dt><dd id="s-sunrise">–</dd>
+              </dl>
+            </div>
+            <div class="sky-col">
+              <h3>Moon</h3>
+              <dl>
+                <dt>Moonrise</dt><dd id="m-rise">–</dd>
+                <dt>Moonset</dt><dd id="m-set">–</dd>
+                <dt>Age</dt><dd id="m-age">–</dd>
+                <dt>Illum.</dt><dd id="m-illum">–</dd>
+              </dl>
+            </div>
+            <div class="moon-pic">
+              <svg id="moon-svg" viewBox="-50 -50 100 100" width="84" height="84" role="img" aria-label="Moon phase"></svg>
+              <div id="m-phase" class="muted"></div>
+              <div id="m-alt" class="muted"></div>
+            </div>
+          </div>
+        </details>
+
+        <details class="panel wide" id="panel-filters" open>
+          <summary><span class="step">3</span> Filters <span class="summary-inline" id="filter-inline"></span></summary>
+          <div class="panel-body">
+            <div class="field-row">
+              <label class="field grow">
+                <span>Search</span>
+                <input type="search" id="search" placeholder="Name, nickname, catalog number, notes…" autocomplete="off">
+              </label>
+              <div class="field">
+                <span>Top targets <small>(stack on other filters)</small></span>
+                <div class="chips" id="top-chips"></div>
+              </div>
+            </div>
+            <div id="preset-groups" class="preset-groups"></div>
+            <div class="field-row">
+              <label class="field">
+                <span>Catalog</span>
+                <select id="catalog"></select>
+              </label>
+              <label class="field">
+                <span>Other filters</span>
+                <select id="special"></select>
+              </label>
+              <label class="field">
+                <span>Constellation</span>
+                <select id="con"></select>
+              </label>
+              <label class="field">
+                <span>My status</span>
+                <select id="mine">
+                  <option value="">Any</option>
+                  <option value="any">Flagged (any)</option>
+                  <option value="1">Priority 1</option>
+                  <option value="2">Priority 2</option>
+                  <option value="3">Priority 3</option>
+                  <option value="p">Planned</option>
+                  <option value="i">In progress</option>
+                  <option value="f">Finished</option>
+                  <option value="notf">Not finished</option>
+                </select>
+              </label>
+            </div>
+            <div class="field-row ranges">
+              <fieldset class="range">
+                <legend>Dec range (°)</legend>
+                <input type="number" id="dec-min" min="-90" max="90" step="1" aria-label="Minimum declination">
+                <span>to</span>
+                <input type="number" id="dec-max" min="-90" max="90" step="1" aria-label="Maximum declination">
+              </fieldset>
+              <fieldset class="range">
+                <legend>Size range (′)</legend>
+                <input type="number" id="size-min" min="0" max="2400" step="any" aria-label="Minimum size">
+                <span>to</span>
+                <input type="number" id="size-max" min="0" max="2400" step="any" aria-label="Maximum size">
+              </fieldset>
+              <fieldset class="range">
+                <legend>Altitude in next 6 h</legend>
+                <span>≥</span>
+                <input type="number" id="min-alt" min="-90" max="90" step="5" placeholder="any" aria-label="Minimum altitude in next 6 hours">
+                <span>°</span>
+              </fieldset>
+              <div class="btn-group end">
+                <button id="btn-clear-keep" class="btn" title="Clear every filter, keeping the Dec and Size ranges">Clear, keep Dec &amp; Size</button>
+                <button id="btn-clear" class="btn">Clear all</button>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="table-bar">
+        <div class="count" id="count" role="status" aria-live="polite"></div>
+        <div class="btn-group">
+          <button id="btn-filters" class="btn phone-only" aria-controls="panel-filters">Filters</button>
+          <label class="phone-only sort-pick"><span class="sr-only">Sort by</span><select id="sort-select"></select></label>
+          <button id="btn-alpha" class="btn desktop-only">A–Z sort</button>
+          <button id="btn-transit" class="btn desktop-only" title="Sort by transit time, starting at the selected time">Transit sort</button>
+          <button id="btn-cols" class="btn desktop-only" aria-expanded="false" aria-controls="col-menu">Columns</button>
+          <button id="btn-my" class="btn" title="Back up or restore your priority / status / notes">My data</button>
+        </div>
+        <div id="col-menu" class="popover" hidden></div>
+        <div id="my-menu" class="popover" hidden>
+          <p>Your priority, status and notes are stored in this browser only.</p>
+          <div class="btn-group">
+            <button id="btn-export" class="btn">Export JSON</button>
+            <label class="btn">Import JSON<input type="file" id="import-file" accept="application/json,.json" hidden></label>
+          </div>
+          <p class="hint" id="my-msg" role="status"></p>
+        </div>
+      </div>
+
+      <div class="table-wrap" id="table-wrap">
+        <button id="btn-top" class="btn to-top" aria-label="Back to top" hidden>↑</button>
+        <table class="catalog" id="catalog-table">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+        <div id="sentinel" aria-hidden="true"></div>
+        <p class="empty" id="empty" hidden>No objects match these filters.</p>
+      </div>
+    </section>
+
+    <section id="tab-about" class="tab-panel prose" role="tabpanel" hidden></section>
+    <section id="tab-guide" class="tab-panel prose" role="tabpanel" hidden></section>
+    <section id="tab-classes" class="tab-panel prose" role="tabpanel" hidden></section>
+    <section id="tab-definitions" class="tab-panel prose" role="tabpanel" hidden></section>
+    <section id="tab-references" class="tab-panel prose" role="tabpanel" hidden></section>
+  </main>
+
+  <dialog id="detail" class="detail" aria-labelledby="d-name"></dialog>
+
+  <footer class="footer">
+    <p>The <strong>Imm Deep Sky Compendium</strong> (<span data-edition="rev">2026, 6th Edition</span>), including all object data, ratings, classifications, notes and images, is the work of
+      <a href="https://www.astrobin.com/users/GaryI/" target="_blank" rel="noopener">Gary Imm</a>, © Gary Imm. Images taken from Onalaska, TX, USA.</p>
+    <p>This is an unofficial web adaptation of his free Excel workbook and is not produced by Gary Imm. For the original, see <span id="footer-links"></span>.
+      <a href="#about" data-goto="about">About &amp; credits</a></p>
+    <p>Sky calculations by <a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noopener">Astronomy Engine</a> (MIT, Don Cross).</p>
+  </footer>
+
+  <script src="vendor/astronomy-2.1.19.min.js"></script>
+  <script src="astro.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
