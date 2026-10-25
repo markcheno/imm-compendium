@@ -41,6 +41,7 @@
     store.set("route", Imm.viewHash());
     if (changed && Imm.isPhone()) window.scrollTo({ top: 0 });
     if (v === "info" && !Imm.isPhone()) $("#view-info").scrollTop = 0;
+    Imm.emit("view", v);
   }
 
   // Navigate to a view; { onlyIfAway } skips it when the catalog is already showing.
@@ -88,9 +89,9 @@
     $("#theme-icon").setAttribute("href", `#i-${THEME_ICON[state.theme] || "auto"}`);
     $$("[data-theme-opt]").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.themeOpt === state.theme)));
     $("#night-btn").setAttribute("aria-pressed", String(state.theme === "night"));
-    // Browser chrome colour follows the page background.
+    // Browser chrome (and the status bar of the installed app) blends with the top bar.
     requestAnimationFrame(() => {
-      $('meta[name="theme-color"]').content = getComputedStyle(document.body).backgroundColor;
+      $('meta[name="theme-color"]').content = getComputedStyle($(".topbar")).backgroundColor;
     });
   }
   function setTheme(t) {
@@ -108,6 +109,7 @@
     Imm.initFilterPanel();
     Imm.initList();
     Imm.initDetail();
+    Imm.initOffline();
     Imm.compute();
     Imm.refresh({ keepScroll: true });
 

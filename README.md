@@ -25,6 +25,9 @@ web/
   js/detail.js                    object detail drawer / sheet (#/object/<id>)
   js/reference.js                 About, User Guide, Types & Classes, Definitions, References
   js/app.js                       routing (#/catalog, #/tonight, #/my, #/info/<page>), theme, start-up
+  js/offline.js                   registers sw.js, update notice, "save all images" on My list
+  sw.js                           service worker: offline cache (VERSION stamped by the Pages workflow)
+  manifest.webmanifest, icons/    home-screen install (name, icons, standalone display)
   astro.js                        sky calculations (replaces the workbook's VBA AstroFunctions)
   data.js                         generated catalogue + reference text
   thumbs/                         generated per-object thumbnails (~34 MB)
@@ -64,6 +67,10 @@ New catalogue columns show up in the app automatically. If a new edition adds a 
 Layout: on desktop, a filter sidebar, a collapsible *Tonight* panel (time, location, sun and moon) opened from the date button in the top bar, and the list as a table or cards. Tablets get the filters as a slide-over drawer. Phones get cards, a bottom sheet for filters, and a bottom bar with Catalog, Tonight, My list and Info.
 
 Additions: text search across names, nicknames, catalogue numbers and notes (press `/`); removable chips for the active filters; constellation, "altitude in next 6 h", and *My status* filters; a *My list* page with counts and backup; previous / next in the object card (← / →) and links to objects (`#/object/m-031`); a column chooser; light / dark / night-vision red themes.
+
+## Home screen and offline
+
+On a phone, *Add to Home Screen* (Safari share menu, or Chrome's install prompt) installs it as a full-screen app. Once loaded over http(s), the service worker keeps the app and `data.js` for offline use and keeps thumbnails as they're viewed; *My list → Save all images* stores all of them (~34 MB). Each deploy stamps the commit id into `sw.js`, so installed copies pick up the new files and show a *Reload* notice. Locally, `sw.js` keeps `VERSION = "dev"` and fetches from the network first, so edits appear on a normal reload. Opening `index.html` from disk works as before, without offline support.
 
 ## Accuracy notes
 

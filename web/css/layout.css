@@ -6,6 +6,7 @@
   position: sticky; top: 0; z-index: 40;
   display: flex; align-items: center; gap: var(--s3);
   padding: var(--s2) var(--s4);
+  padding-top: max(var(--s2), env(safe-area-inset-top));
   padding-left: max(var(--s4), env(safe-area-inset-left));
   padding-right: max(var(--s4), env(safe-area-inset-right));
   background: var(--surface);
@@ -131,7 +132,7 @@ body[data-list="cards"] .cols-wrap { display: none; }
 /* ---------- pages (My list, Info) ---------- */
 .page { max-width: 960px; margin: 0 auto; padding: var(--s5) var(--s4) var(--s6); }
 .page > h2 { font-size: var(--fs-xl); margin-bottom: var(--s2); }
-.page > h3 { font-size: var(--fs-md); margin: var(--s5) 0 var(--s2); }
+.page > h3, .page > section > h3 { font-size: var(--fs-md); margin: var(--s5) 0 var(--s2); }
 
 /* ---------- floating back-to-top ---------- */
 .fab {
@@ -139,6 +140,16 @@ body[data-list="cards"] .cols-wrap { display: none; }
   width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
   border: 1px solid var(--border); background: var(--surface); color: var(--text); box-shadow: var(--shadow-2);
 }
+
+/* ---------- update notice ---------- */
+.toast {
+  position: fixed; z-index: 80; left: 50%; transform: translateX(-50%);
+  bottom: calc(var(--s4) + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: var(--s2); max-width: calc(100vw - 24px);
+  padding: 6px 6px 6px var(--s4); border: 1px solid var(--border); border-radius: var(--r);
+  background: var(--surface); box-shadow: var(--shadow-2); font-weight: 550;
+}
+@media (max-width: 639px) { .toast { bottom: calc(76px + env(safe-area-inset-bottom)); } }
 
 /* ---------- bottom nav (phone) ---------- */
 .bottomnav {
