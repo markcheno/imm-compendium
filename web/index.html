@@ -6,233 +6,285 @@
   <title>Imm Deep Sky Compendium</title>
   <meta name="description" content="Gary Imm's Deep Sky Compendium as a web app: over 3,100 deep sky objects with live altitude, transit and moon data for your location.">
   <meta name="author" content="Gary Imm (Compendium data and images)">
+  <meta name="theme-color" content="#ffffff">
   <meta property="og:title" content="Imm Deep Sky Compendium">
   <meta property="og:description" content="Gary Imm's guide to over 3,100 deep sky objects for astrophotographers, with live sky data for your location.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23111a2e'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4' transform='rotate(-30 16 16)' fill='none' stroke='%23a9c4ff' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ffe9a8'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
-<body>
+<body data-view="catalog">
+  <svg xmlns="http://www.w3.org/2000/svg" hidden>
+    <symbol id="i-logo" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#111a2e" stroke="none"/><ellipse cx="16" cy="16" rx="11" ry="4" transform="rotate(-30 16 16)" fill="none" stroke="#a9c4ff" stroke-width="1.6"/><circle cx="16" cy="16" r="3" fill="#ffe9a8" stroke="none"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-auto" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-chevron-up" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-columns" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></symbol>
+    <symbol id="i-rows" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-location" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 21h16"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 17V5m-5 5 5-5 5 5M4 21h16"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="M7 4v16m-3-3 3 3 3-3M17 20V4m-3 3 3-3 3 3"/></symbol>
+  </svg>
+
   <header class="topbar">
     <div class="brand">
-      <h1>Imm Deep Sky Compendium</h1>
-      <p class="byline">By <a href="https://www.astrobin.com/users/GaryI/" target="_blank" rel="noopener">Gary Imm</a> · <span data-edition>2026 · 6th Edition</span> · <a href="#about" data-goto="about">unofficial web version</a></p>
+      <svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg>
+      <div class="brand-text">
+        <h1><span class="long">Imm Deep Sky Compendium</span><span class="short" aria-hidden="true">Imm DSC</span></h1>
+        <p class="byline">by <a href="https://www.astrobin.com/users/GaryI/" target="_blank" rel="noopener">Gary Imm</a> · <span data-edition>2026 · 6th Edition</span> · <a href="#/info/about">unofficial web version</a></p>
+      </div>
     </div>
-    <nav class="tabs" role="tablist" aria-label="Sections">
-      <button role="tab" data-tab="catalog" aria-selected="true">Catalog</button>
-      <button role="tab" data-tab="about" aria-selected="false">About</button>
-      <button role="tab" data-tab="guide" aria-selected="false">User Guide</button>
-      <button role="tab" data-tab="classes" aria-selected="false">Types &amp; Classes</button>
-      <button role="tab" data-tab="definitions" aria-selected="false">Definitions</button>
-      <button role="tab" data-tab="references" aria-selected="false">References</button>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#/catalog" data-nav="catalog">Catalog</a>
+      <a href="#/my" data-nav="my">My list</a>
+      <a href="#/info" data-nav="info">Info</a>
     </nav>
-    <label class="theme-pick">
-      <span class="sr-only">Theme</span>
-      <select id="theme" title="Theme">
-        <option value="auto">Auto theme</option>
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="night">Night (red)</option>
-      </select>
-    </label>
+    <div class="search" role="search">
+      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <input type="search" id="search" placeholder="Search name, catalog #, notes…" aria-label="Search objects" autocomplete="off" enterkeyhint="search">
+      <kbd class="search-key" aria-hidden="true">/</kbd>
+    </div>
+    <div class="topbar-actions">
+      <button type="button" id="tonight-btn" class="tonight-btn" aria-controls="tonight" aria-expanded="false">
+        <svg id="tb-moon" class="tb-moon" viewBox="-50 -50 100 100" aria-hidden="true"></svg>
+        <span class="tb-text"><span class="tb-when"><span id="tb-when"></span><span id="tb-live" class="live-dot" title="Live" hidden></span></span><span id="tb-where" class="tb-where"></span></span>
+      </button>
+      <button type="button" id="night-btn" class="icon-btn" aria-pressed="false" title="Night vision (red)" aria-label="Night vision mode">
+        <svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg>
+      </button>
+      <div class="menu-wrap">
+        <button type="button" id="theme-btn" class="icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="theme-menu" title="Theme" aria-label="Theme">
+          <svg class="icon" aria-hidden="true"><use id="theme-icon" href="#i-auto"/></svg>
+        </button>
+        <div class="menu" id="theme-menu" role="menu" hidden>
+          <button type="button" role="menuitemradio" data-theme-opt="auto"><svg class="icon" aria-hidden="true"><use href="#i-auto"/></svg>Auto</button>
+          <button type="button" role="menuitemradio" data-theme-opt="light"><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg>Light</button>
+          <button type="button" role="menuitemradio" data-theme-opt="dark"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>Dark</button>
+          <button type="button" role="menuitemradio" data-theme-opt="night"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg>Night (red)</button>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <section id="tab-catalog" class="tab-panel" role="tabpanel">
-      <div class="panels">
-        <details class="panel" id="panel-time" open>
-          <summary><span class="step">1</span> Time &amp; location <span class="summary-inline" id="time-inline"></span></summary>
-          <div class="panel-body">
-            <div class="field-row">
-              <label class="field grow">
-                <span>Date / time <small id="tz-label"></small></span>
-                <input type="datetime-local" id="dt" step="60">
-              </label>
-              <div class="btn-group" aria-label="Set time">
-                <button id="btn-now" class="btn" title="Set to the current time">Now</button>
-                <button id="btn-sunset" class="btn" title="Set to sunset today">Sunset</button>
-                <label class="toggle" title="Keep following the current time"><input type="checkbox" id="live"> Live</label>
+  <main id="main">
+    <!-- ===== Catalog ===== -->
+    <div class="view view-catalog" id="view-catalog">
+      <aside class="filters" id="filters" aria-label="Filters">
+        <div class="filters-head">
+          <h2>Filters</h2>
+          <button type="button" class="icon-btn" data-close-filters aria-label="Close filters"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+        </div>
+        <div class="filters-body" id="filters-body" tabindex="-1">
+          <section class="f-sec">
+            <h3>Top targets <small>stack on other filters</small></h3>
+            <div class="seg seg-full" id="top-seg" role="group" aria-label="Top targets"></div>
+          </section>
+          <section class="f-sec">
+            <h3>Object type</h3>
+            <div id="preset-groups" class="acc-list"></div>
+          </section>
+          <section class="f-sec">
+            <h3>Catalog &amp; features</h3>
+            <label class="field"><span>Catalog</span><select id="catalog"></select></label>
+            <label class="field"><span>Other filters</span><select id="special"></select></label>
+          </section>
+          <section class="f-sec">
+            <h3>Position &amp; size</h3>
+            <label class="field"><span>Constellation</span><select id="con"></select></label>
+            <div class="field">
+              <span id="lbl-alt">Altitude in next 6 h</span>
+              <div class="range"><span class="range-pre">≥</span><input type="number" id="min-alt" min="-90" max="90" step="5" placeholder="any" aria-labelledby="lbl-alt"><span>°</span></div>
+            </div>
+            <div class="field">
+              <span>Dec range (°)</span>
+              <div class="range"><input type="number" id="dec-min" min="-90" max="90" step="1" aria-label="Minimum declination"><span>to</span><input type="number" id="dec-max" min="-90" max="90" step="1" aria-label="Maximum declination"></div>
+            </div>
+            <div class="field">
+              <span>Size range (′)</span>
+              <div class="range"><input type="number" id="size-min" min="0" max="2400" step="any" aria-label="Minimum size"><span>to</span><input type="number" id="size-max" min="0" max="2400" step="any" aria-label="Maximum size"></div>
+            </div>
+          </section>
+          <section class="f-sec">
+            <h3>My list</h3>
+            <label class="field"><span>My status</span><select id="mine"></select></label>
+          </section>
+        </div>
+        <div class="filters-foot">
+          <button type="button" class="btn" id="btn-clear-keep" title="Clear every filter, keeping the Dec and Size ranges">Clear, keep Dec &amp; Size</button>
+          <button type="button" class="btn" id="btn-clear">Clear all</button>
+          <button type="button" class="btn primary show-btn" data-close-filters>Show <span id="show-count"></span></button>
+        </div>
+      </aside>
+      <div class="scrim" data-close-filters aria-hidden="true"></div>
+
+      <div class="catalog-main">
+        <section id="tonight" class="tonight" aria-label="Tonight: time, location, sun and moon">
+          <div class="t-card t-when">
+            <h2 class="t-h"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Date &amp; time <small id="tz-label"></small></h2>
+            <input type="datetime-local" id="dt" step="60" aria-label="Date and time">
+            <div class="seg seg-full" role="group" aria-label="Set time">
+              <button type="button" id="btn-now" title="Set to the current time">Now</button>
+              <button type="button" id="btn-sunset" title="Set to sunset today">Sunset</button>
+              <button type="button" id="btn-live" aria-pressed="false" title="Keep following the current time"><span class="live-dot"></span>Live</button>
+            </div>
+            <div class="stepper" role="group" aria-label="Step time">
+              <button type="button" class="icon-btn" data-step-dir="-1" aria-label="Step back"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button>
+              <div class="seg units" role="group" aria-label="Step size">
+                <button type="button" data-unit="10m">10 m</button><button type="button" data-unit="1h">1 h</button><button type="button" data-unit="1d">1 d</button><button type="button" data-unit="1M">1 mo</button>
               </div>
+              <button type="button" class="icon-btn" data-step-dir="1" aria-label="Step forward"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
             </div>
-            <div class="steppers" aria-label="Step time">
-              <button class="btn small" data-step="-1M">−1 mo</button>
-              <button class="btn small" data-step="-1d">−1 d</button>
-              <button class="btn small" data-step="-1h">−1 h</button>
-              <button class="btn small" data-step="-10m">−10 m</button>
-              <button class="btn small" data-step="10m">+10 m</button>
-              <button class="btn small" data-step="1h">+1 h</button>
-              <button class="btn small" data-step="1d">+1 d</button>
-              <button class="btn small" data-step="1M">+1 mo</button>
+          </div>
+          <div class="t-card t-where">
+            <h2 class="t-h"><svg class="icon" aria-hidden="true"><use href="#i-location"/></svg>Location</h2>
+            <div class="t-fields">
+              <label class="field"><span>Latitude <small>N +</small></span><input type="text" id="lat" inputmode="decimal" autocomplete="off" placeholder="31.784 or 31 47 03"></label>
+              <label class="field"><span>Longitude <small>E +</small></span><input type="text" id="lon" inputmode="decimal" autocomplete="off" placeholder="-95.093"></label>
+              <label class="field span2"><span>Time zone</span><select id="tz"></select></label>
             </div>
-            <div class="field-row">
-              <label class="field">
-                <span>Latitude <small>N +</small></span>
-                <input type="text" id="lat" inputmode="decimal" autocomplete="off" placeholder="31.784 or 31 47 03">
-              </label>
-              <label class="field">
-                <span>Longitude <small>E +</small></span>
-                <input type="text" id="lon" inputmode="decimal" autocomplete="off" placeholder="-95.093">
-              </label>
-              <label class="field">
-                <span>Time zone</span>
-                <select id="tz"></select>
-              </label>
-              <button id="btn-geo" class="btn" title="Use this device's location">Use my location</button>
-            </div>
+            <button type="button" id="btn-geo" class="btn"><svg class="icon sm" aria-hidden="true"><use href="#i-location"/></svg>Use my location</button>
             <p class="hint" id="loc-msg" role="status"></p>
           </div>
-        </details>
-
-        <details class="panel" id="panel-sky" open>
-          <summary><span class="step">2</span> Sun &amp; Moon <span class="summary-inline" id="sky-inline"></span></summary>
-          <div class="panel-body sky">
-            <div class="sky-col">
-              <h3>Sun</h3>
-              <dl>
-                <dt>Sunset</dt><dd id="s-sunset">–</dd>
-                <dt>Naut. dusk</dt><dd id="s-dusk">–</dd>
-                <dt>Naut. dawn</dt><dd id="s-dawn">–</dd>
-                <dt>Sunrise</dt><dd id="s-sunrise">–</dd>
-              </dl>
-            </div>
-            <div class="sky-col">
-              <h3>Moon</h3>
-              <dl>
-                <dt>Moonrise</dt><dd id="m-rise">–</dd>
-                <dt>Moonset</dt><dd id="m-set">–</dd>
-                <dt>Age</dt><dd id="m-age">–</dd>
-                <dt>Illum.</dt><dd id="m-illum">–</dd>
-              </dl>
-            </div>
-            <div class="moon-pic">
-              <svg id="moon-svg" viewBox="-50 -50 100 100" width="84" height="84" role="img" aria-label="Moon phase"></svg>
-              <div id="m-phase" class="muted"></div>
-              <div id="m-alt" class="muted"></div>
-            </div>
+          <div class="t-card t-sun">
+            <h2 class="t-h"><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg>Sun</h2>
+            <dl class="kv">
+              <div><dt>Sunset</dt><dd id="s-sunset">–</dd></div>
+              <div><dt>Nautical dusk</dt><dd id="s-dusk">–</dd></div>
+              <div><dt>Nautical dawn</dt><dd id="s-dawn">–</dd></div>
+              <div><dt>Sunrise</dt><dd id="s-sunrise">–</dd></div>
+            </dl>
           </div>
-        </details>
+          <div class="t-card t-moon">
+            <h2 class="t-h"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>Moon</h2>
+            <div class="moon-row">
+              <svg id="moon-svg" class="moon-svg" viewBox="-50 -50 100 100" role="img" aria-label="Moon phase"></svg>
+              <div><div id="m-phase" class="strong"></div><div id="m-alt" class="muted"></div></div>
+            </div>
+            <dl class="kv">
+              <div><dt>Moonrise</dt><dd id="m-rise">–</dd></div>
+              <div><dt>Moonset</dt><dd id="m-set">–</dd></div>
+              <div><dt>Age</dt><dd id="m-age">–</dd></div>
+              <div><dt>Illuminated</dt><dd id="m-illum">–</dd></div>
+            </dl>
+          </div>
+          <button type="button" class="icon-btn tonight-close" id="tonight-close" aria-label="Hide tonight panel" title="Hide"><svg class="icon" aria-hidden="true"><use href="#i-chevron-up"/></svg></button>
+        </section>
 
-        <details class="panel wide" id="panel-filters" open>
-          <summary><span class="step">3</span> Filters <span class="summary-inline" id="filter-inline"></span></summary>
-          <div class="panel-body">
-            <div class="field-row">
-              <label class="field grow">
-                <span>Search</span>
-                <input type="search" id="search" placeholder="Name, nickname, catalog number, notes…" autocomplete="off">
+        <div class="toolbar" id="toolbar">
+          <div class="toolbar-row">
+            <button type="button" class="btn filter-btn" id="btn-filters" aria-controls="filters" aria-expanded="false">
+              <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg>Filters<span class="badge" id="filter-badge" hidden></span>
+            </button>
+            <div class="count" id="count" role="status" aria-live="polite"></div>
+            <div class="toolbar-actions">
+              <label class="select-wrap sort-pick">
+                <svg class="icon" aria-hidden="true"><use href="#i-sort"/></svg><span class="sr-only">Sort by</span>
+                <select id="sort-select"></select>
               </label>
-              <div class="field">
-                <span>Top targets <small>(stack on other filters)</small></span>
-                <div class="chips" id="top-chips"></div>
+              <div class="seg view-toggle" role="group" aria-label="List layout">
+                <button type="button" data-view-mode="table" aria-pressed="true" title="Table" aria-label="Table"><svg class="icon" aria-hidden="true"><use href="#i-rows"/></svg></button>
+                <button type="button" data-view-mode="cards" aria-pressed="false" title="Cards" aria-label="Cards"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg></button>
               </div>
-            </div>
-            <div id="preset-groups" class="preset-groups"></div>
-            <div class="field-row">
-              <label class="field">
-                <span>Catalog</span>
-                <select id="catalog"></select>
-              </label>
-              <label class="field">
-                <span>Other filters</span>
-                <select id="special"></select>
-              </label>
-              <label class="field">
-                <span>Constellation</span>
-                <select id="con"></select>
-              </label>
-              <label class="field">
-                <span>My status</span>
-                <select id="mine">
-                  <option value="">Any</option>
-                  <option value="any">Flagged (any)</option>
-                  <option value="1">Priority 1</option>
-                  <option value="2">Priority 2</option>
-                  <option value="3">Priority 3</option>
-                  <option value="p">Planned</option>
-                  <option value="i">In progress</option>
-                  <option value="f">Finished</option>
-                  <option value="notf">Not finished</option>
-                </select>
-              </label>
-            </div>
-            <div class="field-row ranges">
-              <fieldset class="range">
-                <legend>Dec range (°)</legend>
-                <input type="number" id="dec-min" min="-90" max="90" step="1" aria-label="Minimum declination">
-                <span>to</span>
-                <input type="number" id="dec-max" min="-90" max="90" step="1" aria-label="Maximum declination">
-              </fieldset>
-              <fieldset class="range">
-                <legend>Size range (′)</legend>
-                <input type="number" id="size-min" min="0" max="2400" step="any" aria-label="Minimum size">
-                <span>to</span>
-                <input type="number" id="size-max" min="0" max="2400" step="any" aria-label="Maximum size">
-              </fieldset>
-              <fieldset class="range">
-                <legend>Altitude in next 6 h</legend>
-                <span>≥</span>
-                <input type="number" id="min-alt" min="-90" max="90" step="5" placeholder="any" aria-label="Minimum altitude in next 6 hours">
-                <span>°</span>
-              </fieldset>
-              <div class="btn-group end">
-                <button id="btn-clear-keep" class="btn" title="Clear every filter, keeping the Dec and Size ranges">Clear, keep Dec &amp; Size</button>
-                <button id="btn-clear" class="btn">Clear all</button>
+              <div class="menu-wrap cols-wrap">
+                <button type="button" class="icon-btn" id="btn-cols" aria-haspopup="true" aria-expanded="false" aria-controls="col-menu" title="Columns" aria-label="Choose columns"><svg class="icon" aria-hidden="true"><use href="#i-columns"/></svg></button>
+                <div id="col-menu" class="menu cols-menu" hidden></div>
               </div>
             </div>
           </div>
-        </details>
-      </div>
-
-      <div class="table-bar">
-        <div class="count" id="count" role="status" aria-live="polite"></div>
-        <div class="btn-group">
-          <button id="btn-filters" class="btn phone-only" aria-controls="panel-filters">Filters</button>
-          <label class="phone-only sort-pick"><span class="sr-only">Sort by</span><select id="sort-select"></select></label>
-          <button id="btn-alpha" class="btn desktop-only">A–Z sort</button>
-          <button id="btn-transit" class="btn desktop-only" title="Sort by transit time, starting at the selected time">Transit sort</button>
-          <button id="btn-cols" class="btn desktop-only" aria-expanded="false" aria-controls="col-menu">Columns</button>
-          <button id="btn-my" class="btn" title="Back up or restore your priority / status / notes">My data</button>
+          <div class="active-chips" id="active-chips" hidden></div>
         </div>
-        <div id="col-menu" class="popover" hidden></div>
-        <div id="my-menu" class="popover" hidden>
-          <p>Your priority, status and notes are stored in this browser only.</p>
-          <div class="btn-group">
-            <button id="btn-export" class="btn">Export JSON</button>
-            <label class="btn">Import JSON<input type="file" id="import-file" accept="application/json,.json" hidden></label>
+
+        <div class="list-wrap" id="list-wrap">
+          <div id="list" class="list"></div>
+          <div class="empty" id="empty" hidden>
+            <p>No objects match these filters.</p>
+            <button type="button" class="btn" id="empty-clear">Clear all filters</button>
           </div>
-          <p class="hint" id="my-msg" role="status"></p>
+          <div class="list-end" id="list-end" hidden><button type="button" class="btn" id="list-more">Show more</button></div>
+          <footer class="footer" data-credits></footer>
         </div>
+        <button type="button" id="btn-top" class="fab" aria-label="Back to top" hidden><svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></button>
       </div>
+    </div>
 
-      <div class="table-wrap" id="table-wrap">
-        <button id="btn-top" class="btn to-top" aria-label="Back to top" hidden>↑</button>
-        <table class="catalog" id="catalog-table">
-          <thead></thead>
-          <tbody></tbody>
-        </table>
-        <div id="sentinel" aria-hidden="true"></div>
-        <p class="empty" id="empty" hidden>No objects match these filters.</p>
+    <!-- ===== My list ===== -->
+    <section class="view view-page" id="view-my" hidden aria-labelledby="my-title">
+      <div class="page">
+        <h2 id="my-title">My list</h2>
+        <p class="muted">Your priority, status and notes, set from any object's card. They're saved in this browser only, so back them up below.</p>
+        <div class="my-groups" id="my-groups"></div>
+        <p class="hint" id="my-empty" hidden>Nothing flagged yet. Open an object and set a priority, status or note under “My plan”.</p>
+        <h3>Back up &amp; restore</h3>
+        <div class="link-row">
+          <button type="button" class="btn" id="btn-export"><svg class="icon sm" aria-hidden="true"><use href="#i-download"/></svg>Export JSON</button>
+          <label class="btn"><svg class="icon sm" aria-hidden="true"><use href="#i-upload"/></svg>Import JSON<input type="file" id="import-file" accept="application/json,.json" hidden></label>
+        </div>
+        <p class="hint" id="my-msg" role="status"></p>
+        <footer class="footer" data-credits></footer>
       </div>
     </section>
 
-    <section id="tab-about" class="tab-panel prose" role="tabpanel" hidden></section>
-    <section id="tab-guide" class="tab-panel prose" role="tabpanel" hidden></section>
-    <section id="tab-classes" class="tab-panel prose" role="tabpanel" hidden></section>
-    <section id="tab-definitions" class="tab-panel prose" role="tabpanel" hidden></section>
-    <section id="tab-references" class="tab-panel prose" role="tabpanel" hidden></section>
+    <!-- ===== Info ===== -->
+    <section class="view view-page" id="view-info" hidden aria-label="Info">
+      <div class="page">
+        <nav class="subnav" aria-label="Info pages">
+          <a href="#/info/about" data-info="about">About</a>
+          <a href="#/info/guide" data-info="guide">User Guide</a>
+          <a href="#/info/classes" data-info="classes">Types &amp; Classes</a>
+          <a href="#/info/definitions" data-info="definitions">Definitions</a>
+          <a href="#/info/references" data-info="references">References</a>
+        </nav>
+        <article id="info-about" class="prose"></article>
+        <article id="info-guide" class="prose" hidden></article>
+        <article id="info-classes" class="prose" hidden></article>
+        <article id="info-definitions" class="prose" hidden></article>
+        <article id="info-references" class="prose" hidden></article>
+        <footer class="footer" data-credits></footer>
+      </div>
+    </section>
   </main>
 
-  <dialog id="detail" class="detail" aria-labelledby="d-name"></dialog>
+  <nav class="bottomnav" aria-label="Sections">
+    <a href="#/catalog" data-nav="catalog"><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg><span>Catalog</span></a>
+    <a href="#/tonight" data-nav="tonight"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg><span>Tonight</span></a>
+    <a href="#/my" data-nav="my"><svg class="icon" aria-hidden="true"><use href="#i-bookmark"/></svg><span>My list</span></a>
+    <a href="#/info" data-nav="info"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span>Info</span></a>
+  </nav>
 
-  <footer class="footer">
-    <p>The <strong>Imm Deep Sky Compendium</strong> (<span data-edition="rev">2026, 6th Edition</span>), including all object data, ratings, classifications, notes and images, is the work of
-      <a href="https://www.astrobin.com/users/GaryI/" target="_blank" rel="noopener">Gary Imm</a>, © Gary Imm. Images taken from Onalaska, TX, USA.</p>
-    <p>This is an unofficial web adaptation of his free Excel workbook and is not produced by Gary Imm. For the original, see <span id="footer-links"></span>.
-      <a href="#about" data-goto="about">About &amp; credits</a></p>
-    <p>Sky calculations by <a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noopener">Astronomy Engine</a> (MIT, Don Cross).</p>
-  </footer>
+  <dialog id="detail" class="detail" aria-labelledby="d-name"></dialog>
 
   <script src="vendor/astronomy-2.1.19.min.js"></script>
   <script src="astro.js"></script>
   <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/columns.js"></script>
+  <script src="js/tonight.js"></script>
+  <script src="js/list.js"></script>
+  <script src="js/filter-panel.js"></script>
+  <script src="js/detail.js"></script>
+  <script src="js/reference.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

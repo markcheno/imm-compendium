@@ -1,0 +1,179 @@
+/* Imm Deep Sky Compendium: design tokens, themes, reset and typography. */
+
+:root {
+  color-scheme: light;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* spacing, radius, type */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+  --r-sm: 6px; --r: 10px; --r-lg: 14px; --r-pill: 999px;
+  --fs-xs: 12px; --fs-sm: 13px; --fs: 14px; --fs-md: 16px; --fs-lg: 20px; --fs-xl: 24px;
+  --tap: 36px;          /* minimum control height (44px on touch screens) */
+  --topbar-h: 57px;     /* measured at runtime */
+  --sidebar-w: 300px;
+
+  /* colours */
+  --bg: #f4f5f8;
+  --surface: #ffffff;
+  --surface-2: #eef0f5;
+  --surface-3: #e3e7ef;
+  --text: #151b27;
+  --muted: #5a6376;
+  --faint: #8b93a5;
+  --border: #dde1e9;
+  --border-strong: #c5ccda;
+  --accent: #3157d5;
+  --accent-text: #ffffff;
+  --accent-soft: rgba(49, 87, 213, 0.12);
+  --seg-on: #ffffff;
+  --link: #2a50c8;
+  --row-hover: #f0f4ff;
+  --pri-1: #2e9d57;
+  --pri-2: #d29a00;
+  --pri-3: #d4483f;
+  --heat-alpha: 0.85;
+  --heat-text: #111;
+  --milky: #8a5a2b;
+  --sun-day: #f4c430;
+  --sun-twilight: #8f9bb3;
+  --sun-dark: #1d2333;
+  --moon-lit: #f1ecd8;
+  --moon-dark: #2a2f3d;
+  --scrim: rgba(10, 14, 24, 0.45);
+  --shadow-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+  --shadow-2: 0 10px 30px rgba(16, 24, 40, 0.16), 0 2px 6px rgba(16, 24, 40, 0.08);
+}
+
+@media (pointer: coarse) {
+  :root { --tap: 44px; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="night"]) {
+    color-scheme: dark;
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface-2: #1a2235;
+    --surface-3: #232d44;
+    --text: #e4e8f1;
+    --muted: #98a2b7;
+    --faint: #6c768b;
+    --border: #253049;
+    --border-strong: #34405d;
+    --accent: #7ea2ff;
+    --accent-text: #0a0e1a;
+    --accent-soft: rgba(126, 162, 255, 0.16);
+  --seg-on: #3a4867;
+    --link: #9dbbff;
+    --row-hover: #18223a;
+    --pri-1: #4cc77a;
+    --pri-2: #e8b829;
+    --pri-3: #f06a60;
+    --heat-alpha: 0.38;
+    --heat-text: var(--text);
+    --milky: #d8a46c;
+    --sun-dark: #000000;
+    --scrim: rgba(0, 0, 0, 0.6);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-2: 0 12px 36px rgba(0, 0, 0, 0.55);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a0e1a;
+  --surface: #111827;
+  --surface-2: #1a2235;
+  --surface-3: #232d44;
+  --text: #e4e8f1;
+  --muted: #98a2b7;
+  --faint: #6c768b;
+  --border: #253049;
+  --border-strong: #34405d;
+  --accent: #7ea2ff;
+  --accent-text: #0a0e1a;
+  --accent-soft: rgba(126, 162, 255, 0.16);
+  --seg-on: #3a4867;
+  --link: #9dbbff;
+  --row-hover: #18223a;
+  --pri-1: #4cc77a;
+  --pri-2: #e8b829;
+  --pri-3: #f06a60;
+  --heat-alpha: 0.38;
+  --heat-text: var(--text);
+  --milky: #d8a46c;
+  --sun-dark: #000000;
+  --scrim: rgba(0, 0, 0, 0.6);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 12px 36px rgba(0, 0, 0, 0.55);
+}
+
+/* Night vision: everything in dim reds to preserve dark adaptation at the telescope. */
+:root[data-theme="night"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --surface: #0b0000;
+  --surface-2: #160202;
+  --surface-3: #210403;
+  --text: #d23a2a;
+  --muted: #8f2a20;
+  --faint: #6a1d15;
+  --border: #300806;
+  --border-strong: #4a0d08;
+  --accent: #b3271b;
+  --accent-text: #000000;
+  --accent-soft: rgba(179, 39, 27, 0.18);
+  --seg-on: #3a0905;
+  --link: #e0503c;
+  --row-hover: #1e0402;
+  --pri-1: #e0503c;
+  --pri-2: #a8301f;
+  --pri-3: #6e1d12;
+  --heat-alpha: 1;
+  --milky: #b0301f;
+  --sun-day: #d23a2a;
+  --sun-twilight: #5a140c;
+  --sun-dark: #000000;
+  --moon-lit: #b3271b;
+  --moon-dark: #1a0402;
+  --scrim: rgba(0, 0, 0, 0.7);
+  --shadow-1: none;
+  --shadow-2: 0 0 0 1px var(--border-strong);
+}
+:root[data-theme="night"] img { filter: grayscale(1) sepia(1) hue-rotate(-50deg) saturate(4) brightness(0.55); }
+:root[data-theme="night"] .logo { filter: grayscale(1) sepia(1) hue-rotate(-50deg) saturate(4) brightness(0.6); }
+
+/* ---------- reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: var(--fs)/1.45 var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
+a { color: var(--link); text-underline-offset: 2px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: default; opacity: 0.45; }
+img, svg { display: block; }
+code, kbd { font-family: var(--mono); font-size: 0.92em; }
+kbd { padding: 0 5px; border: 1px solid var(--border-strong); border-bottom-width: 2px; border-radius: 4px; background: var(--surface-2); }
+small { color: var(--muted); font-weight: 400; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+* { -webkit-tap-highlight-color: transparent; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.muted { color: var(--muted); }
+.strong { font-weight: 600; }
+
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.icon.sm { width: 16px; height: 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
