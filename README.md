@@ -79,7 +79,7 @@ Additions: text search across names, nicknames, catalogue numbers and notes (pre
 
 ## Publishing (GitHub Pages)
 
-`web/` is a self-contained static site with relative paths, so it can be served as-is: publish the `web` folder (for example with a Pages workflow that uploads `web/` as the artifact, or by copying its contents to the branch / `docs/` folder Pages serves). The thumbnails add ~34 MB and 3,144 files.
+Live at <https://markcheno.github.io/imm-compendium/>. `.github/workflows/pages.yml` uploads `web/` (a self-contained static site with relative paths) and deploys it on every push to `main` that touches `web/`; run it by hand from the Actions tab with *Run workflow*. The repository's Pages source is set to *GitHub Actions*. The thumbnails add ~34 MB and 3,144 files.
 
 Publishing makes Gary Imm's data and ~3,100 of his images public. He distributes the workbook free and invites contact (see the *About* tab), so ask his permission before putting it online. The app credits him in the header, an *About* tab, each object's image caption, and the footer.
 
