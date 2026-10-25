@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+._*
+
+# Excel lock/temp files (created while the workbook is open)
+~$*
+*.tmp
+
+# Older editions passed to extract.py --previous
+Imm Deep Sky Compendium - 2023 - *.xlsm
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Editors
+.vscode/
+.idea/
+*.swp
